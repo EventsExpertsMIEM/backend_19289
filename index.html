@@ -1,1 +1,764 @@
-<h1>Hello, World!</h1>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="shortcut icon" href="img/favicon_circle.png">
+  <title>Events Project</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom fonts for this template -->
+  <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed:500,700" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Muli:400,400i,800,800i" rel="stylesheet">
+  <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="css/resume.min.css" rel="stylesheet">
+
+</head>
+
+<body id="page-top">
+
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
+    <a class="navbar-brand js-scroll-trigger" href="#page-top">
+      <span class="d-block d-lg-none">Events Project</span>
+      <span class="d-none d-lg-block">
+        <img class="img-fluid img-profile rounded-circle border-0 mx-auto w-50" src="img/logo.jpg" alt="">
+      </span>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link js-scroll-trigger" href="#about">About</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link js-scroll-trigger" href="#repo">Repo</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link js-scroll-trigger" href="#install">Install</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link js-scroll-trigger" href="#db">DB setup</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link js-scroll-trigger" href="#usage">Running</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link js-scroll-trigger" href="#setup">setup.sh</a>
+        </li>
+        <li class="nav-item">
+          <div class="btn-group">
+            <a class="nav-link js-scroll-trigger" href="#restapi">REST API</a>
+            <span class="nav-link disabled d-none d-lg-block">|</span>
+            <span class="nav-link disabled d-block d-lg-none">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+            <a class="nav-link btn dropdown-toggle-split" data-toggle="collapse" aria-haspopup="true" aria-expanded="false" aria-controls="collapsemenu" data-target="#collapsemenu">
+              <span class="sr-only">Dropdown</span>
+              <i class="fas fa-caret-down"></i>
+            </a>
+          </div>
+          <div class="collapse" id="collapsemenu">
+            <div class="card card-body bg-dark">
+              <a class="nav-link js-scroll-trigger" href="#restapi_accounts">Accounts</a>
+              <a class="nav-link js-scroll-trigger" href="#restapi_users">Users</a>
+              <a class="nav-link js-scroll-trigger" href="#restapi_events">Events</a>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container-fluid p-0">
+
+    <section class="resume-section p-3 p-lg-5 d-flex align-items-center" id="about">
+      <div class="w-100">
+        <h2 class="mb-0"><a href="https://github.com/EventsExpertsMIEM/backend_19288">19288 REST API backend</a>
+        </h2>
+        <div class="subheading mb-5">
+           Сервис мероприятий конгрессной деятельности
+        </div>
+        <p class="lead mb-5">Это страница репозитория с кодом бекенда Web-сервиса для организации и поддержки конгрессной деятельности -  для автоматизации и упрощения взаимодействия "участник-организатор-исполнитель".</p>
+        <p>Основные функции сервиса:</p>
+        <ul class="list-group-flush">
+          <li>Отслеживание мероприятий</li>
+          <li>Создание мероприятий и их настройка</li>
+          <li>Отслеживание статуса подготовки мероприятий</li>
+          <li>Регистрация на мероприятия и получение информационной поддержки</li>
+        </ul>
+      </div>
+    </section>
+
+    <hr class="m-0">
+
+    <section class="resume-section p-3 p-lg-5 d-flex align-items-center" id="repo">
+      <div class="w-100">
+        <h2 class="mb-5">Repo</h2>
+
+          <p>Как работать в репозитории:</p>
+          <ul class="list-group-flush">
+            <li>Создавать под фичи и задачи отдельные ветки</li>
+            <li>После завершения работы создавать ПР с указанием <a href="https://github.com/mvalkhimovich">меня</a> для проверки</li>
+            <li>ПР просьба оформлять грамотно и, желательно, с указанием линки на карточку трелло (или как там оно)</li>
+            <li>ПР делаются в ветку dev</li>
+            <li>Ветка master существует для "релизных" версий</li>
+          </ul>
+
+
+          <p>Структура репозитория:</p>
+          <ul class="list-group-flush">
+            <li>В <code>app</code> лежит код самого бекенда</li>
+            <ul>
+              <li><code>/</code> - базовая логика</li>
+              <li><code>db</code> - структура и взаимодействие с бд</li>
+              <li><code>restful_api</code> - рестапи</li>
+            </ul>
+          </ul>
+
+      </div>
+
+    </section>
+
+    <hr class="m-0">
+
+    <section class="resume-section p-3 p-lg-5 d-flex align-items-center" id="install">
+      <div class="w-100">
+        <h2 class="mb-5">Install</h2>
+
+        <p>В первую очередь ставим нужные пакеты (Ubuntu):</p>
+        <pre><kbd>sudo apt install git python python3 python3-pip</kbd></pre>
+        <pre><kbd>pip3 install virtualenv</kbd></pre>
+        <p></p>
+        <p>Клонинуем репозиторий и настраиваем виртуальное (опционально для продакшн-сервера) окружение (bash/zsh):</p>
+        <pre><kbd>git clone git@github.com:EventsExpertsMIEM/backend_19288.git</kbd></pre>
+        <pre><kbd>python3 -m virtualenv venv</kbd></pre>
+        <pre><kbd>. venv/bin/activate</kbd></pre>
+        <p></p>
+        <p>Ставим зависимости проекта</p>
+        <pre><kbd>pip3 install -r requirements.txt</kbd></pre>
+      </div>
+    </section>
+
+    <hr class="m-0">
+
+    <section class="resume-section p-3 p-lg-5 d-flex align-items-center" id="db">
+      <div class="w-100">
+        <h2 class="mb-5">DB setup</h2>
+
+        <p>Почему PostgreSQL:</p>
+          <ul class="list-group-flush">
+            <li>Хорошая докумантция и большое сообщество.</li>
+            <li>Поддержка множества дополнительных типов, например UUID, JSONB и другие.</li>
+            <li>Следует ACID (в отличии от MySQL/InnoDB).</li>
+            <li>Шардирование из коробки.</li>
+          </ul>
+
+        <p>Можно поднять PostgreSQL в облаке (например <a href="https://www.heroku.com/">Heroku</a>) или же развернуть на своих ресурсах по инструкции ниже:</p>
+
+        <p>1) Ставим пакет:</p>
+          <ul class="list-group-flush">
+            <li>Ubuntu:</li>
+            <pre><kbd>sudo apt install -y postgresql</kbd></pre>
+            <li>CentOS 7:</li>
+            <pre><kbd>sudo yum install postgresql-server postgresql-contrib</kbd></pre>
+            <pre><kbd>sudo postgresql-setup initdb</kbd></pre>
+            <pre><kbd>sudo systemctl start postgresql</kbd></pre>
+          </ul>
+        <p></p>
+        <p>2) Переходим в суперюзера бд:</p>
+        <pre><kbd>sudo su - postgres</kbd></pre>
+        <p></p>
+        <p>3) Создаём новую роль:</p>
+        <pre><kbd>createuser %usename% --pwprompt</kbd></pre>
+        <p></p>
+        <p>4) Создаём саму БД:</p>
+        <pre><kbd>createdb -O %username% %dbname%</kbd></pre>
+        <p></p>
+        <p>5) Подключаемся к новой БД и даем доступы:</p>
+        <pre><kbd>psql %dbname% </kbd></pre>
+        <pre><kbd>GRANT ALL ON DATABASE %dbname% to %username%;</kbd></pre>
+        <p></p>
+        <p>6) CENTOS ONLY! Отредактировать конфиг-файл:</p>
+        <pre><kbd>cd /var/lib/pgsql/data/</kbd></pre>
+        <pre><kbd>sudo nano/vim ph_hba.conf</kbd></pre>
+        <pre><code>Заменить METHOD на md5 у local, ipv4, ipv6 connections (3 записи).</code></pre>
+      </div>
+    </section>
+
+    <hr class="m-0">
+
+    <section class="resume-section p-3 p-lg-5 d-flex align-items-center" id="usage">
+      <div class="w-100">
+        <h2 class="mb-5">Running</h2>
+        <p>Сервис берёт свои настройки (БД, параметры почты и др.) через переменные окружения, поэтому рекомендуется использовать специальный скрипт (например <a class="js-scroll-trigger" href="#setup">setup.sh</a>) и инициилизировать переменные окручения через <kbd>. setup.sh</kbd> / <kbd>source setup.sh</kbd></p>
+        <p></p>
+        <p>При первом запуске необходимо указать <kbd>--create-tables password</kbd>, где первый параметр (пере)создает в БД нужные таблицы, а второй - пароль от начальной учетной записи <code>root_mail</code></p>
+        <p></p>
+        <p>Запуск происходит через <kbd>python3 main.py</kbd> или же через <kbd>nohup python3 main.py > service.log &</kbd> если необходимо запустить сервис в фоне с записью логов в <code>service.log</code></p>
+      </div>
+    </section>
+
+    <hr class="m-0">
+
+    <section class="resume-section p-3 p-lg-5 d-flex align-items-center" id="setup">
+      <div class="w-100">
+        <h2 class="mb-5">SETUP.SH</h2>
+
+        <p>Данный скрипт заполняет конфиг из переменных окружения, и его рекомендуется положить заполненный вне папки репозитория.</p>
+
+        <div><kbd>#!/bin/bash</kbd></div>
+        <p></p>
+        <code># пользователь postgresql</code>
+        <div><kbd>export PGUSER=""</kbd></div>
+        <code># адрес postgresql</code>
+        <div><kbd>export PGHOST=""</kbd></div>
+        <code># порт postgresql</code>
+        <div><kbd>export PGPORT=""</kbd></div>
+        <code># название БД в postgresql</code>
+        <div><kbd>export PGDATABASE=""</kbd></div>
+        <code># пароль пользователя postgresql</code>
+        <div><kbd>export PGPASSWORD=""</kbd></div>
+        <p></p>
+        <code># порт приложения</code>
+        <div><kbd>export PORT=""</kbd></div>
+        <p></p>
+        <code># подтверждение регистрации по электронной почте</code>
+        <code># 'active' (account_status) для отключения подтверждения</code>
+        <code># 'unconfirmed' (account_status) для включения</code>
+        <div><kbd>export DEFAULT_USER_STATUS=""</kbd></div>
+        <p></p>
+        <code># smtp сервер электронной почты</code>
+        <div><kbd>export SMTP_HOST=""</kbd></div>
+        <code># адрес электронной почты для отправки</code>
+        <div><kbd>export MAIL_LOGIN=""</kbd></div>
+        <code># пароль от электронной почты (рекомендуется создавать пароль приложения)</code>
+        <div><kbd>export MAIL_PASSWORD=""</kbd></div>
+        <code># временно - линк на сервис (http(s)://адрес:порт)</code>
+        <div><kbd>export SITE_ADDR=""</kbd></div>
+        
+      </div>
+    </section>
+
+    <hr class="m-0">
+
+    <section class="resume-section p-3 p-lg-5 d-flex align-items-center" id="restapi">
+      <div class="w-100">
+        <h2 class="mb-5">REST API</h2>
+        <p>Далее идет описание REST API.</p>
+        <p>Основным форматом является json (но не всегда), для чего необходимо указывать в заголовках <kbd>application/json</kbd>. В случае отсутсвия данного заголовка или же некорретно составленного тела будет возвращена ошибка с http кодом 415.</p>
+        <p>Ниже приведены описания всех возможных ответов сервера:</p>
+            <div><kbd>200</kbd> - основной ответ в случае успешного выполнения запроса.</div>
+            <div><kbd>201</kbd> - ответ при успешном создании.</div>
+            <p></p>
+            <div><kbd>400</kbd> - ответ при неправильных ключах json.</div>
+            <div><kbd>401</kbd> - ответ незалогиненому пользователю.</div>
+            <div><kbd>403</kbd> - ответ при отсутствии доступа к выполняемому действию.</div>
+            <div><kbd>404</kbd> - ответ при отсутствии запрашиваемого пути или запрашиваемых данных.</div>
+            <div><kbd>405</kbd> - ответ при отсутствии метода у данного пути.</div>
+            <div><kbd>409</kbd> - ответ при конфликте состояния.</div>
+            <div><kbd>415</kbd> - ответ при некорректном json.</div>
+            <div><kbd>422</kbd> - ответ при некорретных поданых данных.</div>
+      </div>
+    </section>
+
+    <hr class="m-0">
+
+    <section class="resume-section p-3 p-lg-5 d-flex align-items-center" id="restapi_accounts">
+      <div class="w-100">
+        <h2 class="mb-5">Accounts</h2>
+        <p>Ручки, связанные с аккаунтами.</p>
+
+        <div><kbd>/login</kbd><code> - [POST]</code></div>
+        <ul class="list-group-flush" style="list-style-type:none;">
+          <li>Авторизация пользователя в системе.</li>
+          <li><code>Принимает</code></li>
+          <ul>
+            <li><kbd>mail</kbd> - почта пользователя</li>
+            <li><kbd>password</kbd> - пароль пользователя</li>
+          </ul>
+          <li><code>200 OK</code></li>
+          <ul>
+            <li><kbd>description</kbd></li>
+            <li><kbd>extra</kbd> с ролью пользователя в системе.</li>
+          </ul>
+          <li><code>400 - </code>некорректные ключи json</li>
+          <li><code>404 - </code>пользователь не найден</li>
+          <li><code>409 - </code>пользователь уже авторизован</li>
+          <li><code>415 - </code>прислан не json, или же он составлен неверно</li>
+          <li><code>422 - </code>неверный пароль</li>
+        </ul>
+
+        <div class="text-warning"><kbd>/logout</kbd><code> - [GET/POST] - </code>LOGIN REQUIRED</div>
+        <ul class="list-group-flush" style="list-style-type:none;">
+          <li>Логаут пользователя из системы.</li>
+          <li><code>200 OK</code></li>
+          <ul>
+            <li><kbd>description</kbd></li>
+          </ul>
+          <li><code>401 - </code>не залогинен</li>
+        </ul>
+
+        <div><kbd>/register</kbd><code> - [POST]</code></div>
+        <ul class="list-group-flush" style="list-style-type:none;">
+          <li>Регистрация пользователя в системе.</li>
+          <li><code>Принимает</code></li>
+          <ul>
+            <li><kbd>mail</kbd> - почта пользователя</li>
+            <li><kbd>name</kbd> - имя пользователя</li>
+            <li><kbd>surname</kbd> - фамилия пользователя</li>
+            <li><kbd>password</kbd> - пароль пользователя</li>
+          </ul>
+          <li><code>201 CREATED</code></li>
+          <ul>
+            <li><kbd>extra</kbd></li>
+          </ul>
+          <li><code>400 - </code>некорректные ключи json</li>
+          <li><code>409 - </code>пользователь уже авторизован</li>
+          <li><code>409 - </code>пользователь с таким <code>mail</code> уже зарегистрирован или забанен</li>
+          <li><code>415 - </code>прислан не json, или же он составлен неверно</li>
+        </ul>
+
+        <div><kbd>/confirm</kbd><code> - [POST]</code></div>
+        <ul class="list-group-flush" style="list-style-type:none;">
+          <li>Подтверждение аккаунта по ссылке.</li>
+          <li><code>Принимает</code></li>
+          <ul>
+            <li><kbd>link</kbd> - ссылка подтверждения пользователя</li>
+          </ul>
+          <li><code>200 OK</code></li>
+          <ul>
+            <li><kbd>description</kbd></li>
+          </ul>
+          <li><code>400 - </code>некорректные ключи json</li>
+          <li><code>404 - </code>пользователь с таким <code>link</code> не найден</li>
+          <li><code>409 - </code>пользователь с таким <code>link</code> уже подтвержден</li>
+          <li><code>415 - </code>прислан не json, или же он составлен неверно</li>
+        </ul>
+
+        <div class="text-warning"><kbd>/change_password</kbd><code> - [POST] - </code>LOGIN REQUIRED</div>
+        <ul class="list-group-flush" style="list-style-type:none;">
+          <li>Смена пароля.</li>
+          <li><code>Принимает</code></li>
+          <ul>
+            <li><kbd>old_password</kbd> - старый пароль</li>
+            <li><kbd>new_password</kbd> - новый пароль</li>
+          </ul>
+          <li><code>200 OK</code></li>
+          <ul>
+            <li><kbd>description</kbd></li>
+            <li><kbd>extra</kbd> с ролью пользователя в системе.</li>
+          </ul>
+          <li><code>400 - </code>некорректные ключи json</li>
+          <li><code>401 - </code>не залогинен</li>
+          <li><code>415 - </code>прислан не json, или же он составлен неверно</li>
+          <li><code>422 - </code>неверный пароль</li>
+        </ul>
+
+        <div class="text-warning"><kbd>/close_all_sessions</kbd><code> - [POST] - </code>LOGIN REQUIRED</div>
+        <ul class="list-group-flush" style="list-style-type:none;">
+          <li>Завершение всех сессий кроме текущей.</li>
+          <li><code>Принимает</code></li>
+          <ul>
+            <li><kbd>password</kbd> - пароль</li>
+          </ul>
+          <li><code>200 OK</code></li>
+          <ul>
+            <li><kbd>description</kbd></li>
+            <li><kbd>extra</kbd> с ролью пользователя в системе.</li>
+          </ul>
+          <li><code>400 - </code>некорректные ключи json</li>
+          <li><code>401 - </code>не залогинен</li>
+          <li><code>415 - </code>прислан не json, или же он составлен неверно</li>
+          <li><code>422 - </code>неверный пароль</li>
+        </ul>
+
+        <div class="text-warning"><kbd>/delete</kbd><code> - [POST] - </code>LOGIN REQUIRED</div>
+        <ul class="list-group-flush" style="list-style-type:none;">
+          <li>Удаление своего профиля.</li>
+          <li><code>Принимает</code></li>
+          <ul>
+            <li><kbd>password</kbd> - пароль</li>
+          </ul>
+          <li><code>200 OK</code></li>
+          <ul>
+            <li><kbd>description</kbd></li>
+            <li><kbd>extra</kbd> с ролью пользователя в системе.</li>
+          </ul>
+          <li><code>400 - </code>некорректные ключи json</li>
+          <li><code>401 - </code>не залогинен</li>
+          <li><code>415 - </code>прислан не json, или же он составлен неверно</li>
+          <li><code>422 - </code>неверный пароль</li>
+        </ul>
+
+        <div class="text-warning"><kbd>/user/[id]/ban</kbd><code> - [GET] - </code>LOGIN+RIGHTS REQUIRED</div>
+        <ul class="list-group-flush" style="list-style-type:none;">
+          <li>Бан пользователя.</li>
+          <li><code>Принимает</code></li>
+          <ul>
+            <li><kbd>[id]</kbd> - id пользователя из url</li>
+          </ul>
+          <li><code>200 OK</code></li>
+          <ul>
+            <li><kbd>description</kbd></li>
+          </ul>
+          <li><code>401 - </code>не залогинен</li>
+          <li><code>403 - </code>нет прав на выполнение</li>
+          <li><code>404 - </code>пользователь с таким <code>id</code> не найден</li>
+          <li><code>422 - </code>неверный пароль</li>
+        </ul>
+      </div>
+    </section>
+
+    <hr class="m-0">
+
+    <section class="resume-section p-3 p-lg-5 d-flex align-items-center" id="restapi_users">
+      <div class="w-100">
+        <h2 class="mb-5">Users</h2>
+        <p>Ручки, связанные с информацией о пользователях.</p>
+        <p>Все ручки данной категории имеют префикс <code>/user</code> (т.е. первая ручка <code>/</code> является <code>/user/</code>.</p>
+
+        <div class="text-warning"><kbd>/</kbd><code> - [GET] - </code>LOGIN REQUIRED</div>
+        <ul class="list-group-flush" style="list-style-type:none;">
+          <li>Получение информации о текущем пользователе.</li>
+          <li><code>200 OK</code></li>
+          <ul>
+            <li><kbd>mail</kbd> - почта текущего пользователя</li>
+            <li><kbd>name</kbd> - имя текущего пользователя</li>
+            <li><kbd>surname</kbd> - фамилия текущего пользователя</li>
+            <li><kbd>service_status</kbd> - статус текущего пользователя в системе</li>
+            <li><kbd>phone</kbd> - телефон текущего пользователя</li>
+            <li><kbd>organization</kbd> - организация/компания текущего пользователя</li>
+            <li><kbd>position</kbd> - должность текущего пользователя</li>
+            <li><kbd>country</kbd> - страна текущего пользователя</li>
+            <li><kbd>bio</kbd> - дополнительное описание текущего пользователя</li>
+          </ul>
+          <li><code>401 - </code>не залогинен</li>
+        </ul>
+
+        <div class="text-warning"><kbd>/status</kbd><code> - [GET] - </code>LOGIN REQUIRED</div>
+        <ul class="list-group-flush" style="list-style-type:none;">
+          <li>Получение статуса текущего пользователя в системе.</li>
+          <li><code>200 OK</code></li>
+          <ul>
+            <li><kbd>service_status</kbd> - статус</li>
+          </ul>
+          <li><code>401 - </code>не залогинен</li>
+        </ul>
+
+        <div class="text-warning"><kbd>/</kbd><code> - [PUT] - </code>LOGIN REQUIRED</div>
+        <ul class="list-group-flush" style="list-style-type:none;">
+          <li>Обновление информации о текущем пользователе.</li>
+          <li><code>Принимает</code></li>
+          <ul>
+            <li>Все поля опциональны и должны быть из списка ниже</li>
+            <li><kbd>name</kbd> - имя пользователя</li>
+            <li><kbd>surname</kbd> - фамилия пользователя</li>
+            <li><kbd>phone</kbd> - телефон пользователя</li>
+            <li><kbd>organization</kbd> - организация/компания пользователя</li>
+            <li><kbd>position</kbd> - должность пользователя</li>
+            <li><kbd>country</kbd> - страна пользователя</li>
+            <li><kbd>bio</kbd> - дополнительное описание пользователя</li>
+          </ul>
+          <li><code>200 OK</code></li>
+          <ul>
+            <li><kbd>description</kbd></li>
+          </ul>
+          <li><code>400 - </code>некорректные ключи json</li>
+          <li><code>401 - </code>не залогинен</li>
+          <li><code>415 - </code>прислан не json, или же он составлен неверно</li>
+        </ul>
+
+        <div class="text-warning"><kbd>/events/[role]</kbd><code> - [GET] - </code>LOGIN REQUIRED</div>
+        <ul class="list-group-flush" style="list-style-type:none;">
+          <li>Получение данных о мероприятиях текущего пользователя по ролям (от новых к поздним).</li>
+          <li><code>Принимает</code></li>
+          <ul>
+            <li><kbd>[role]</kbd> - роль пользователя в мероприятии из url - <code>creator</code>/<code>manager</code>/<code>presenter</code>/<code>viewer</code></li>
+            <li>Опционально позволяет использовать query string для выборки из всех элементов в виде <kbd>?offset=value&size=value</kbd>, где</li>
+            <ul>
+              <li><kbd>offset</kbd> - начальный элемент выборки, не меньше 0</li>
+              <li><kbd>size</kbd> - количество элементов в выборке, больше 2</li>
+            </ul>
+          </ul>
+          <li><code>200 OK</code></li>
+          <ul>
+            <li>Список</li>
+            <li><kbd>id</kbd> - id мероприятия</li>
+            <li><kbd>name</kbd> - название мероприятия</li>
+            <li><kbd>start_date</kbd> - дата начала мероприятия</li>
+          </ul>
+          <li><code>400 - </code>некорректные параметры query string</li>
+          <li><code>401 - </code>не залогинен</li>
+          <li><code>422 - </code>некорректные данные или роль</li>
+        </ul>
+
+        <div class="text-warning"><kbd>/all</kbd><code> - [GET] - </code>LOGIN+RIGHTS REQUIRED</div>
+        <ul class="list-group-flush" style="list-style-type:none;">
+          <li>Получение списка пользователей системы.</li>
+          <li><code>Принимает</code></li>
+          <ul>
+            <li>Опционально позволяет использовать query string для выборки из всех элементов в виде <kbd>?offset=value&size=value</kbd>, где</li>
+            <ul>
+              <li><kbd>offset</kbd> - начальный элемент выборки, не меньше 0</li>
+              <li><kbd>size</kbd> - количество элементов в выборке, больше 2</li>
+            </ul>
+          </ul>
+          <li><code>200 OK</code></li>
+          <ul>
+            <li>Список</li>
+            <li><kbd>id</kbd> - id пользователя</li>
+            <li><kbd>mail</kbd> - почта пользователя</li>
+            <li><kbd>name</kbd> - имя пользователя</li>
+            <li><kbd>surname</kbd> - фамилия пользователя</li>
+            <li><kbd>service_status</kbd> - статус пользователя</li>
+            <li><kbd>account_status</kbd> - статус аккаунта пользователя</li>
+          </ul>
+          <li><code>400 - </code>некорректные параметры query string</li>
+          <li><code>401 - </code>не залогинен</li>
+          <li><code>403 - </code>нет прав на выполнение</li>
+          <li><code>422 - </code>некорректные данные</li>
+        </ul>
+
+        <div class="text-warning"><kbd>/[id]</kbd><code> - [GET] - </code>LOGIN+RIGHTS REQUIRED</div>
+        <ul class="list-group-flush" style="list-style-type:none;">
+          <li>Получение информации о пользователе.</li>
+          <li><code>Принимает</code></li>
+          <ul>
+            <li><kbd>[id]</kbd> - id пользователя из url</li>
+          </ul>
+          <li><code>200 OK</code></li>
+          <ul>
+            <li><kbd>mail</kbd> - почта пользователя</li>
+            <li><kbd>name</kbd> - имя пользователя</li>
+            <li><kbd>surname</kbd> - фамилия пользователя</li>
+            <li><kbd>service_status</kbd> - статус пользователя в системе</li>
+            <li><kbd>phone</kbd> - телефон пользователя</li>
+            <li><kbd>organization</kbd> - организация/компания пользователя</li>
+            <li><kbd>position</kbd> - должность пользователя</li>
+            <li><kbd>country</kbd> - страна пользователя</li>
+            <li><kbd>bio</kbd> - дополнительное описание пользователя</li>
+          </ul>
+          <li><code>401 - </code>не залогинен</li>
+          <li><code>403 - </code>нет прав на выполнение</li>
+          <li><code>404 - </code>пользователь с таким <code>id</code> не найден</li>
+        </ul>
+
+        <div class="text-warning"><kbd>/[id]/events/[role]</kbd><code> - [GET] - </code>LOGIN+RIGHTS REQUIRED</div>
+        <ul class="list-group-flush" style="list-style-type:none;">
+          <li>Получение данных о мероприятиях пользователя по ролям (от новых к поздним).</li>
+          <li><code>Принимает</code></li>
+          <ul>
+            <li><kbd>[id]</kbd> - id пользователя из url</li>
+            <li><kbd>[role]</kbd> - роль пользователя в мероприятии из url - <code>creator</code>/<code>manager</code>/<code>presenter</code>/<code>viewer</code></li>
+            <li>Опционально позволяет использовать query string для выборки из всех элементов в виде <kbd>?offset=value&size=value</kbd>, где</li>
+            <ul>
+              <li><kbd>offset</kbd> - начальный элемент выборки, не меньше 0</li>
+              <li><kbd>size</kbd> - количество элементов в выборке, больше 2</li>
+            </ul>
+          </ul>
+          <li><code>200 OK</code></li>
+          <ul>
+            <li>Список</li>
+            <li><kbd>id</kbd> - id мероприятия</li>
+            <li><kbd>name</kbd> - название мероприятия</li>
+            <li><kbd>start_date</kbd> - дата начала мероприятия</li>
+          </ul>
+          <li><code>400 - </code>некорректные параметры query string</li>
+          <li><code>401 - </code>не залогинен</li>
+          <li><code>403 - </code>нет прав на выполнение</li>
+          <li><code>404 - </code>пользователь с таким <code>id</code> не найден</li>
+          <li><code>422 - </code>некорректные данные или роль</li>
+        </ul>
+      </div>
+    </section>
+
+    <hr class="m-0">
+
+    <section class="resume-section p-3 p-lg-5 d-flex align-items-center" id="restapi_events">
+      <div class="w-100">
+        <h2 class="mb-5">Events</h2>
+        <p>Ручки, связанные с мероприятиями.</p>
+        <p>Все ручки данной категории имеют префикс <code>/event</code> (т.е. первая ручка <code>/</code> является <code>/event/[id]</code>.</p>
+
+        <div class="text-warning"><kbd>/[id]</kbd><code> - [GET]</code></div>
+        <ul class="list-group-flush" style="list-style-type:none;">
+          <li>Получение информации о мероприятии.</li>
+          <li><code>Принимает</code></li>
+          <ul>
+            <li><kbd>[id]</kbd> - id мероприяния из url</li>
+          </ul>
+          <li><code>200 OK</code></li>
+          <ul>
+            <li><kbd>part</kbd> - тип учатия в мероприятии (создатель, мэнэджер, докладчик и т.д.)</li>
+            <li><kbd>event</kbd> - данные по мероприятию</li>
+            <ul>
+              <li><kbd>creator_mail</kbd> - почта создателя мероприятия</li>
+              <li><kbd>phone</kbd> - телефон создателя мероприятия</li>
+              <li><kbd>name</kbd> - название мероприятия</li>
+              <li><kbd>sm_description</kbd> - краткое описание мероприятия</li>
+              <li><kbd>description</kbd> - полное описание мероприятия</li>
+              <li><kbd>start_date</kbd> - дата начала мероприятия</li>
+              <li><kbd>end_date</kbd> - дата окончания мероприятия (ключ может отсутствовать, если мероприятие проводится один день)</li>
+              <li><kbd>start_time</kbd> - время начала мероприятия (может остуствовать)</li>
+              <li><kbd>location</kbd> - место проведения мероприятия</li>
+              <li><kbd>site_link</kbd> - ссылка на собственный сайт мероприятия</li>
+              <li><kbd>additional_info</kbd> - дополнительная информация мероприятия</li>
+            </ul>
+          </ul>
+         <li><code>404 - </code>мероприятие с таким <code>id</code> не найдено</li>
+        </ul>
+
+        <div class="text-warning"><kbd>/[id]</kbd><code> - [PUT] - </code>LOGIN+RIGHTS REQUIRED</div>
+        <ul class="list-group-flush" style="list-style-type:none;">
+          <li>Изменение данных о мероприятии.</li>
+          <li><code>Принимает</code></li>
+          <ul>
+            <li><kbd>[id]</kbd> - id мероприяния из url</li>
+            <li><code>JSON</code></li>
+            <ul>
+              <li>Все поля опциональны и должны быть из списка ниже</li>
+              <li><kbd>name</kbd> - название мероприятия</li>
+              <li><kbd>sm_description</kbd> - краткое описание мероприятия</li>
+              <li><kbd>description</kbd> - полное описание мероприятия</li>
+              <li><kbd>start_date</kbd> - дата начала мероприятия</li>
+              <li><kbd>end_date</kbd> - дата окончания мероприятия (ключ может отсутствовать, если мероприятие проводится один день)</li>
+              <li><kbd>start_time</kbd> - время начала мероприятия (может остуствовать)</li>
+              <li><kbd>location</kbd> - место проведения мероприятия</li>
+              <li><kbd>site_link</kbd> - ссылка на собственный сайт мероприятия</li>
+              <li><kbd>additional_info</kbd> - дополнительная информация мероприятия</li>
+            </ul>
+          </ul>
+          <li><code>200 OK</code></li>
+          <ul>
+            <li><kbd>description</kbd></li>
+          </ul>
+          <li><code>400 - </code>некорректные ключи json</li>
+          <li><code>401 - </code>не залогинен</li>
+          <li><code>403 - </code>нет прав на выполнение</li>
+          <li><code>404 - </code>мероприятие с таким <code>id</code> не найдено</li>
+          <li><code>415 - </code>прислан не json, или же он составлен неверно</li>
+          <li><code>422 - </code>некорректные данные (скорее всего даты и время)</li>
+        </ul>
+
+        <div class="text-warning"><kbd>/</kbd><code> - [POST] - </code>LOGIN REQUIRED</div>
+        <ul class="list-group-flush" style="list-style-type:none;">
+          <li>Создание мероприятия.</li>
+          <li><code>Принимает</code></li>
+          <ul>
+            <li><kbd>name</kbd> - название мероприятия</li>
+            <li><kbd>sm_description</kbd> - краткое описание мероприятия</li>
+            <li><kbd>description</kbd> - полное описание мероприятия</li>
+            <li><kbd>start_date</kbd> - дата начала мероприятия</li>
+            <li><kbd>end_date</kbd> - дата окончания мероприятия (ключ может отсутствовать, если мероприятие проводится один день)</li>
+            <li><kbd>start_time</kbd> - время начала мероприятия (может остуствовать, если мероприятие проводится несколько дней)</li>
+            <li><kbd>location</kbd> - место проведения мероприятия</li>
+            <li><kbd>site_link</kbd> - ссылка на собственный сайт мероприятия</li>
+            <li><kbd>additional_info</kbd> - дополнительная информация мероприятия</li>
+          </ul>
+          <li><code>201 CREATED</code></li>
+          <ul>
+            <li><kbd>extra</kbd> - id созданного мероприятия</li>
+          </ul>
+          <li><code>400 - </code>некорректные ключи json</li>
+          <li><code>401 - </code>не залогинен</li>
+          <li><code>404 - </code>мероприятие с таким <code>id</code> не найдено</li>
+          <li><code>415 - </code>прислан не json, или же он составлен неверно</li>
+          <li><code>422 - </code>некорректные данные (скорее всего даты и время)</li>
+        </ul>
+
+        <div class="text-warning"><kbd>/all</kbd><code> - [GET]</code></div>
+        <ul class="list-group-flush" style="list-style-type:none;">
+          <li>Получение списка мероприятий (от новых к поздним).</li>
+          <li><code>Принимает</code></li>
+          <ul>
+            <li>Опционально позволяет использовать query string для выборки из всех элементов в виде <kbd>?offset=value&size=value</kbd>, где</li>
+            <ul>
+              <li><kbd>offset</kbd> - начальный элемент выборки, не меньше 0</li>
+              <li><kbd>size</kbd> - количество элементов в выборке, больше 2</li>
+            </ul>
+          </ul>
+          <li><code>200 OK</code></li>
+          <ul>
+            <li>Список</li>
+            <li><kbd>id</kbd> - id мероприятия</li>
+            <li><kbd>name</kbd> - название мероприятия</li>
+            <li><kbd>sm_description</kbd> - краткое описание мероприятия</li>
+            <li><kbd>start_date</kbd> - дата начала мероприятия</li>
+            <li><kbd>end_date</kbd> - дата окончания мероприятия (ключ может отсутствовать, если мероприятие проводится один день)</li>
+            <li><kbd>start_time</kbd> - время начала мероприятия (может остуствовать, если мероприятие проводится несколько дней)</li>
+            <li><kbd>location</kbd> - место проведения мероприятия</li>
+            <li><kbd>site_link</kbd> - ссылка на собственный сайт мероприятия</li>
+          </ul>
+          <li><code>400 - </code>некорректные параметры query string</li>
+          <li><code>422 - </code>некорректные данные</li>
+        </ul>
+
+        <div class="text-warning"><kbd>/[id]/join</kbd><code> - [POST] - </code>LOGIN REQUIRED</div>
+        <ul class="list-group-flush" style="list-style-type:none;">
+          <li>Запись на мероприятие.</li>
+          <li><code>Принимает</code></li>
+          <ul>
+            <li><kbd>[id]</kbd> - id мероприяния из url</li>
+            <li><code>JSON</code></li>
+            <ul>
+              <li><kbd>role</kbd> - роль участия (<code>presenter</code>/<code>viewer</code>)</li>
+              <li>Если <code>presenter</code> то также</li>
+              <li><kbd>report</kbd> - доклад</li>
+              <li><kbd>presenter_description</kbd> - описание докладчика</li>
+            </ul>
+          </ul>
+          <li><code>200 OK</code></li>
+          <ul>
+            <li><kbd>description</kbd></li>
+          </ul>
+          <li><code>400 - </code>некорректные ключи json</li>
+          <li><code>401 - </code>не залогинен</li>
+          <li><code>404 - </code>мероприятие с таким <code>id</code> не найдено</li>
+          <li><code>409 - </code>пользователь уже является частью мероприятия как [role]</li>
+          <li><code>415 - </code>прислан не json, или же он составлен неверно</li>
+          <li><code>422 - </code>некорректные данные</li>
+        </ul>
+
+        <div class="text-warning"><kbd>/[id]/presenters</kbd><code> - [GET]</code></div>
+        <ul class="list-group-flush" style="list-style-type:none;">
+          <li>Получение списка докладчиков мероприятия.</li>
+          <li><code>Принимает</code></li>
+          <ul>
+            <li><kbd>[id]</kbd> - id мероприяния из url</li>
+          </ul>
+          <li><code>200 OK</code></li>
+          <ul>
+            <li>Список</li>
+            <li><kbd>name</kbd> - имя докладчика</li>
+            <li><kbd>surname</kbd> - фамилия докладчика</li>
+            <li><kbd>report</kbd> - доклад</li>
+            <li><kbd>presenter_description</kbd> - описание докладчика</li>
+          </ul>
+          <li><code>404 - </code>мероприятие с таким <code>id</code> не найдено</li>
+        </ul>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Plugin JavaScript -->
+  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+  <!-- Custom scripts for this template -->
+  <script src="js/resume.min.js"></script>
+
+</body>
+
+</html>
