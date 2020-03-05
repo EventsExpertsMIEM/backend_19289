@@ -8,7 +8,7 @@ host: "localhost:8080"
 basePath: "/"
 tags:
 - name: account
-  description: Работа над учетными записями пользователей
+  description: Работа с учетными записями пользователей
   
 - name: user
   description: Работа с пользователями
@@ -25,6 +25,45 @@ schemes:
 # - "https"
 - http
 paths:
+  /login:
+    post:
+      summary: Войти в систему
+      parameters:
+      - name: body
+        in: body
+        schema:
+          type: object
+          properties:
+            email:
+              type: string
+              format: email
+            password:
+              type: string
+              example: "123"
+          required:
+            - email
+            - password
+      tags:
+      - account
+      responses:
+        200:
+          description: Пользователь успешно залогинен
+        404:
+          description: Пользователь не найден
+        422:
+          description: Неверный пароль
+  
+  /logout:
+    get:
+      summary: Выход из системы
+      tags:
+      - account
+      responses:
+        200:
+          description: Пользователь успешно вышел из системы
+        401:
+          description: Клиент не авторизован
+
   /user/{id}/questions:
     get:
       tags:
@@ -332,7 +371,7 @@ securityDefinitions:
   cookieAuth:
     type: apiKey
     in: header
-    name: session
+    name: Cookie
 
 definitions:
   User:
