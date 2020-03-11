@@ -56,6 +56,9 @@
           <a class="nav-link js-scroll-trigger" href="#setup">setup.sh</a>
         </li>
         <li class="nav-item">
+          <a class="nav-link js-scroll-trigger" href="#restapi">Rest api</a>
+        </li>
+        <li class="nav-item">
           <a class="nav-link" href="swagger.html">Api documentation</a>
         </li>
       </ul>
@@ -66,18 +69,17 @@
 
     <section class="resume-section p-3 p-lg-5 d-flex align-items-center" id="about">
       <div class="w-100">
-        <h2 class="mb-0"><a href="https://github.com/EventsExpertsMIEM/backend_19288">19288 REST API backend</a>
+        <h2 class="mb-0"><a href="https://github.com/EventsExpertsMIEM/backend_19289">19289 REST API backend</a>
         </h2>
         <div class="subheading mb-5">
-           Сервис мероприятий конгрессной деятельности
+          Площадка получения экспертных оценок и мнений в области конгрессной деятельности
         </div>
-        <p class="lead mb-5">Это страница репозитория с кодом бекенда Web-сервиса для организации и поддержки конгрессной деятельности -  для автоматизации и упрощения взаимодействия "участник-организатор-исполнитель".</p>
         <p>Основные функции сервиса:</p>
         <ul class="list-group-flush">
-          <li>Отслеживание мероприятий</li>
-          <li>Создание мероприятий и их настройка</li>
-          <li>Отслеживание статуса подготовки мероприятий</li>
-          <li>Регистрация на мероприятия и получение информационной поддержки</li>
+          <li>Просматривать, создавать вопросы и отвечать на них;</li>
+          <li>Просматривать, создавать статьи;</li>
+          <li>Просматривать различные документы связанные с конгрессной деятельностью;</li>
+          <li>Зарегистрироваться, подать заявку на получения статуса эксперта и развивать конгрессное сообщество;</li>
         </ul>
       </div>
     </section>
@@ -91,7 +93,7 @@
           <p>Как работать в репозитории:</p>
           <ul class="list-group-flush">
             <li>Создавать под фичи и задачи отдельные ветки</li>
-            <li>После завершения работы создавать ПР с указанием <a href="https://github.com/mvalkhimovich">меня</a> для проверки</li>
+            <li>После завершения работы создавать ПР с указанием <a href="https://github.com/mark622">меня</a> для проверки</li>
             <li>ПР просьба оформлять грамотно и, желательно, с указанием линки на карточку трелло (или как там оно)</li>
             <li>ПР делаются в ветку dev</li>
             <li>Ветка master существует для "релизных" версий</li>
@@ -100,11 +102,11 @@
 
           <p>Структура репозитория:</p>
           <ul class="list-group-flush">
-            <li>В <code>app</code> лежит код самого бекенда</li>
+            <li>В <code>exproj</code> лежит код самого бекенда</li>
             <ul>
               <li><code>/</code> - базовая логика</li>
               <li><code>db</code> - структура и взаимодействие с бд</li>
-              <li><code>restful_api</code> - рестапи</li>
+              <li><code>restful_api</code> - ручки</li>
             </ul>
           </ul>
 
@@ -123,7 +125,7 @@
         <pre><kbd>pip3 install virtualenv</kbd></pre>
         <p></p>
         <p>Клонинуем репозиторий и настраиваем виртуальное (опционально для продакшн-сервера) окружение (bash/zsh):</p>
-        <pre><kbd>git clone git@github.com:EventsExpertsMIEM/backend_19288.git</kbd></pre>
+        <pre><kbd>git clone git@github.com:EventsExpertsMIEM/backend_19289.git</kbd></pre>
         <pre><kbd>python3 -m virtualenv venv</kbd></pre>
         <pre><kbd>. venv/bin/activate</kbd></pre>
         <p></p>
@@ -234,6 +236,24 @@
 
     <hr class="m-0">
 
+    <section class="resume-section p-3 p-lg-5 d-flex align-items-center" id="restapi">
+      <div class="w-100">
+        <h2 class="mb-5">Rest api</h2>
+        <p>Основным форматом является json (но не всегда), для чего необходимо указывать в заголовках <kbd>application/json</kbd>. В случае отсутсвия данного заголовка или же некорретно составленного тела будет возвращена ошибка с http кодом 415.</p>
+        <p>Ниже приведены описания всех возможных ответов сервера:</p>
+            <div><kbd>200</kbd> - основной ответ в случае успешного выполнения запроса.</div>
+            <div><kbd>201</kbd> - ответ при успешном создании.</div>
+            <p></p>
+            <div><kbd>400</kbd> - ответ при неправильных ключах json.</div>
+            <div><kbd>401</kbd> - ответ незалогиненому пользователю.</div>
+            <div><kbd>403</kbd> - ответ при отсутствии доступа к выполняемому действию.</div>
+            <div><kbd>404</kbd> - ответ при отсутствии запрашиваемого пути или запрашиваемых данных.</div>
+            <div><kbd>405</kbd> - ответ при отсутствии метода у данного пути.</div>
+            <div><kbd>409</kbd> - ответ при конфликте состояния.</div>
+            <div><kbd>415</kbd> - ответ при некорректном json.</div>
+            <div><kbd>422</kbd> - ответ при некорретных поданых данных.</div>
+      </div>
+    </section>
   </div>
 
   <!-- Bootstrap core JavaScript -->
