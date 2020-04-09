@@ -21,7 +21,7 @@ def login_status():
             'name': current_user.name,
             'surname': current_user.surname,
             'email': current_user.email,
-            'access': current_user.access
+            'role': current_user.get_role()
         }
 
     return jsonify(status)

@@ -4,21 +4,10 @@ import nanoid
 import uuid
 
 from flask import abort
-from flask_login import current_user, AnonymousUserMixin
+from flask_login import current_user
 
 from exproj import config, util
 from exproj.db import get_session, USER_ACCESS, User
-
-
-class Anonymous(AnonymousUserMixin):
-    def __init__(self):
-        self.access = USER_ACCESS['guest']
-
-    def has_access(self, access):
-        return False
-
-    def can_answer(self, q):
-        return False
 
 
 def user_loader(cookie_id):
@@ -164,7 +153,7 @@ def ban_user(u_id):
         u = User.get_or_404(s, u_id)
 
         if (u.has_access('moderator')
-                and not current_user.has_access('moderator')):
+                or not current_user.has_access('moderator')):
             abort(403)
 
         if u.status == 'banned':

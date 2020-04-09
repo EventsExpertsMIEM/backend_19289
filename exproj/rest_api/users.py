@@ -1,11 +1,12 @@
 from flask import Blueprint, abort, request, jsonify, send_file
 from flask_login import login_required, current_user
 
-from . import get_json, make_ok
+from . import get_json, make_ok, posts
 from exproj import validation, config
 from exproj.logic import users as users_logic, posts as posts_logic
 from exproj.util import get_post_class
 from exproj.validation import schemas
+from exproj.db import Comment
 
 bp = Blueprint('users', __name__, url_prefix='/user')
 
@@ -68,14 +69,15 @@ def delete_avatar(u_id):
 
 @bp.route('/<int:u_id>/questions')
 @bp.route('/<int:u_id>/articles')
-@bp.route('/<int:u_id>/comments')
 def get_user_posts(u_id):
-    PostClass = get_post_class(request.path)
+    return posts.get_posts(u_id)
 
-    closed = request.args.get('closed')
+
+@bp.route('/<int:u_id>/comments')
+def get_user_comments(u_id):
     offset = request.args.get('offset')
     limit = request.args.get('limit')
 
-    posts = posts_logic.get_many(PostClass, u_id, closed,
-                                 offset=offset, limit=limit)
-    return jsonify(posts)
+    comments = posts_logic.get_many(Comment, u_id, None,
+                                    offset=offset, limit=limit)
+    return jsonify(comments)

@@ -2,7 +2,7 @@ from flask import Blueprint, request, jsonify, abort
 from flask_login import login_required, current_user
 
 from . import make_ok, get_json
-from exproj.db import Question, Article
+from exproj.db import Question, Article, Post_status
 from exproj.util import get_post_class, routes
 from exproj.logic import posts as posts_logic
 from exproj.validation import validate_tags, schemas
@@ -11,17 +11,23 @@ bp = Blueprint('posts', __name__)
 
 
 @routes(bp, ['question', 'article'], '/all')
-def get_posts():
+def get_posts(u_id=None):
     PostClass = get_post_class(request.path)
     args = request.args
 
     offset = args.get('offset')
     limit = args.get('limit')
     closed = args.get('closed')
+    archived = args.get('archived')
     tags = args['tags'].split(',') if ('tags' in args) else None
 
-    posts = posts_logic.get_many(PostClass, None, closed,
-                                 tags, offset, limit)
+    # todo: move to validation module
+    if (archived and u_id != current_user.id
+            and not current_user.has_access('moderator')):
+        abort(403)
+
+    posts = posts_logic.get_many(PostClass, u_id, closed,
+                                 tags, offset, limit, archived)
 
     return jsonify(posts)
 
@@ -58,6 +64,22 @@ def delete_post(p_id):
     PostClass = get_post_class(request.path)
     posts_logic.delete(PostClass, p_id)
     return make_ok(f'{PostClass.__name__} #{p_id} has been deleted')
+
+
+@routes(bp, ['question', 'article'], '/<int:p_id>/archive')
+@login_required
+def archive_post(p_id):
+    PostClass = get_post_class(request.path)
+    posts_logic.archive(PostClass, p_id)
+    return make_ok(f'{PostClass.__name__} #{p_id} has been archived')
+
+
+@routes(bp, ['question', 'article'], '/<int:p_id>/unarchive')
+@login_required
+def unarchive_post(p_id):
+    PostClass = get_post_class(request.path)
+    posts_logic.unarchive(PostClass, p_id)
+    return make_ok(f'{PostClass.__name__} #{p_id} has been unarchived')
 
 
 @routes(bp, ['question', 'article'], '/<int:p_id>', methods=['PUT'])

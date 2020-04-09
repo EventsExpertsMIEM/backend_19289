@@ -1,7 +1,7 @@
 import uuid
 from datetime import datetime
 
-from flask_login import current_user, UserMixin
+from flask_login import current_user, UserMixin, AnonymousUserMixin
 from sqlalchemy import (Column, Integer, String, ForeignKey, Table,
                         DateTime, Boolean, UniqueConstraint)
 from sqlalchemy.dialects.postgresql import TEXT, ENUM, UUID
@@ -64,8 +64,7 @@ class User(Base, UserMixin):
             'name': self.name,
             'surname': self.surname,
             'email': self.email,
-            'role': [key for key, value in USER_ACCESS.items()
-                     if value == self.access][0],
+            'role': self.get_role(),
             'tags': [t.name for t in self.tags.all()],
             'interests': [t.name for t in self.interests.all()],
             'position': self.position,
@@ -77,6 +76,10 @@ class User(Base, UserMixin):
             'comment_count': self.comment_count,
             'has_avatar': self.avatar is not None
         }
+
+    def get_role(self):
+        return [key for key, value in USER_ACCESS.items()
+                if value == self.access][0]
 
     def has_access(self, access):
         return self.access >= USER_ACCESS[access]
@@ -94,6 +97,18 @@ class User(Base, UserMixin):
             return False
 
         return True
+
+
+class Anonymous(AnonymousUserMixin):
+    def __init__(self):
+        self.id = 0
+        self.access = USER_ACCESS['guest']
+
+    def has_access(self, access):
+        return False
+
+    def can_answer(self, q):
+        return False
 
 
 class Avatar(Base):

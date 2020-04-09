@@ -17,8 +17,9 @@ logger.addHandler(console_output_handler)
 logger.setLevel(logging.INFO)
 
 from exproj import config
-from exproj.logic.accounts import user_loader, Anonymous
+from exproj.logic.accounts import user_loader
 from exproj.rest_api import accounts, users, posts, comments, tags
+from exproj.db import Anonymous
 
 def on_json_load_error(self, e):
     abort(415, 'Wrong json')

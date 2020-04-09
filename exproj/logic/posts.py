@@ -3,20 +3,23 @@ from flask_login import current_user
 
 from . import slice
 from exproj import logger
-from exproj.db import (get_session, Question, Article, Tag, Comment,
+from exproj.db import (get_session, Question, Article, Tag, Comment, User,
                        DCommentVotes, DPostVotes)
 
 
 def get_many(PostClass, u_id=None, closed=None,
-             tags=None, offset=None, limit=None):
+             tags=None, offset=None, limit=None, archived=None):
     with get_session() as s:
         query = (
             s.query(PostClass)
-            .filter(PostClass.status == 'active')
+            .filter(PostClass.status == ('archived' if archived else 'active'))
             .order_by(PostClass.creation_date.desc())
         )
 
         if u_id:
+            if not s.query(User).filter_by(id=u_id).count():
+                abort(404, f'User with id #{u_id} not found')
+
             query = query.filter(PostClass.u_id == u_id)
 
         if tags:
@@ -28,8 +31,8 @@ def get_many(PostClass, u_id=None, closed=None,
                     abort(422, '`closed` parameter is'
                                ' available only for questions')
 
-                if (not current_user.is_authenticated or
-                        not current_user.has_access('expert')):
+                if (not current_user.has_access('expert')
+                        and current_user.id != u_id):
                     abort(403, 'You can\'t view closed questions')
 
                 query = query.filter(Question.closed.is_(True))
@@ -44,7 +47,11 @@ def get_many(PostClass, u_id=None, closed=None,
 
 def get(PostClass, p_id):
     with get_session() as s:
-        p = PostClass.get_or_404(s, p_id)
+        p = s.query(PostClass).get(p_id)
+        if (not p or p.status == 'deleted'
+                or (p.status == 'archived' and current_user.id != p.u_id
+                    and not current_user.has_access('moderator'))):
+            abort(404)
 
         if (PostClass == Question and p.closed
                 and not current_user.has_access('expert')
@@ -104,6 +111,30 @@ def delete(PostClass, p_id):
         p.status = 'deleted'
 
 
+def _archive(PostClass, p_id, cancel):
+    with get_session() as s:
+        if PostClass == Comment:
+            raise TypeError('Cannot archive comment')
+
+        p = s.query(PostClass).get(p_id)
+        if not p or p.status == 'deleted':
+            abort(404, f'{PostClass.__name__} with id #{p_id} not found')
+
+        if (not current_user.has_access('moderator')
+                and p.u_id != current_user.id):
+            abort(403)
+
+        p.status = 'archived' if not cancel else 'active'
+
+
+def archive(PostClass, p_id):
+    _archive(PostClass, p_id, False)
+
+
+def unarchive(PostClass, p_id):
+    _archive(PostClass, p_id, True)
+
+
 def update(PostClass, p_id, new_data):
     with get_session() as s:
         p = PostClass.get_or_404(s, p_id)
@@ -152,12 +183,15 @@ def toggle_vote(PostClass, p_id, action):
                 if cur_vote.upvoted:
                     s.delete(cur_vote)
                     p.score -= 1
+                    p.author.rating -= 1
                     return 'deleted'
                 else:
                     p.score += 2
+                    p.author.rating += 2
                     cur_vote.upvoted = True
             else:
                 p.score += 1
+                p.author.rating += 1
                 new_vote.upvoted = True
                 s.add(new_vote)
             return 'up'
@@ -166,12 +200,15 @@ def toggle_vote(PostClass, p_id, action):
                 if not cur_vote.upvoted:
                     s.delete(cur_vote)
                     p.score += 1
+                    p.author.rating += 1
                     return 'deleted'
                 else:
                     p.score -= 2
+                    p.author.rating -= 2
                     cur_vote.upvoted = False
             else:
                 p.score -= 1
+                p.author.rating -= 1
                 new_vote.upvoted = False
                 s.add(new_vote)
             return 'down'
