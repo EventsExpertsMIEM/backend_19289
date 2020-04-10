@@ -1,0 +1,1063 @@
+swagger: "2.0"
+info:
+  description: "Документация к REST API проекта 19289."
+  version: "1.0.0"
+  title: "Experts Project"
+  termsOfService: "http://swagger.io/terms/"
+host: "192.168.255.98:8080"
+basePath: "/"
+schemes:
+- http
+tags:
+- name: account
+  description: Работа с учетными записями пользователей
+  
+- name: user
+  description: Работа с пользователями
+  
+- name: question
+  description: Работа с вопросами
+  
+- name: article
+  description: Работа со статьями. Полностью дублируются с ручками вопросов (вместо /question используйте /article). closed, only_experts_answer, only_chosen_tags отсутствуют
+  
+- name: comment
+  description: Работа с комментариями/ответами
+  
+- name: tags
+  description: Работа с тэгами. Требуются права модератора
+paths:
+  /login_status:
+    get:
+      summary: Проверка залогинен ли пользователь
+      description: Поле `info` отсутствует, если пользователь не залогинен
+      tags:
+      - account
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            properties:
+              is_logged_in:
+                type: boolean
+              info:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  surname:
+                    type: string
+                  email:
+                    type: string
+                    format: email
+
+  /login:
+    post:
+      summary: Войти в систему
+      parameters:
+      - name: body
+        in: body
+        schema:
+          type: object
+          properties:
+            email:
+              type: string
+              format: email
+            password:
+              type: string
+              example: "123"
+          required:
+            - email
+            - password
+      tags:
+      - account
+      responses:
+        200:
+          description: Пользователь успешно залогинен
+        404:
+          description: Пользователь не найден
+        409:
+          description: Попытка войти в забаненный аккаунт
+        422:
+          description: Неверный пароль
+  /logout:
+    get:
+      security:
+      - cookieAuth: []
+      summary: Выход из системы
+      tags:
+      - account
+      responses:
+        200:
+          description: Пользователь успешно вышел из системы
+        401:
+          description: Пользователь не авторизован
+  /register:
+    post:
+      summary: Регистрация пользователя
+      tags:
+      - account
+      parameters:
+      - name: body
+        in: body
+        schema:
+          type: object
+          properties:
+            name:
+              type: string
+            surname:
+              type: string
+            email:
+              type: string
+              format: email
+            password:
+              type: string
+              example: "123"
+            position:
+              type: string
+          required:
+            - name
+            - surname
+            - email
+            - password
+      responses:
+        200:
+          description: ОК
+        409:
+          description: Конфликт при регистрации
+  /confirm:
+    post:
+      summary: Подтвердить регистрацию
+      parameters:
+      - name: body
+        in: body
+        required: true
+        schema:
+          type: object
+          properties:
+            link:
+              type: string
+      tags:
+      - account
+      responses:
+        200:
+          description: ОК
+  /delete:
+    post:
+      security:
+      - cookieAuth: []
+      summary: Удалить текущего пользователя
+      parameters:
+      - name: body
+        in: body
+        required: true
+        schema:
+          type: object
+          properties:
+            password:
+              type: string
+      tags:
+      - account
+      responses:
+        200:
+          description: ОК
+        403:
+          description: Нет прав
+  /close_all_sessions:
+    post:
+      security:
+      - cookieAuth: []
+      summary: Удалить все сессии кроме текущей
+      tags:
+      - account
+      parameters:
+      - name: body
+        in: body
+        required: true
+        schema:
+          type: object
+          properties:
+            password:
+              type: string
+      responses:
+        200:
+          description: ОК
+        401:
+          description: Пользователь не авторизован
+  /reset_password:
+    post:
+      summary: Сбросить пароль
+      tags:
+      - account
+      parameters:
+      - name: body
+        in: body
+        required: true
+        schema:
+          type: object
+          properties:
+            email:
+              type: string
+              format: email
+      responses:
+        200:
+          description: ОК
+        401:
+          description: Пользователь не авторизован
+  /change_password:
+    post:
+      security:
+      - cookieAuth: []
+      summary: Изменить пароль
+      tags:
+      - account
+      parameters:
+      - name: body
+        in: body
+        required: true
+        schema:
+          type: object
+          properties:
+            old_password:
+              type: string
+            new_password:
+              type: string
+          
+      responses:
+        200:
+          description: ОК
+        401:
+          description: Пользователь не авторизован
+
+
+  /user/all:
+    get:
+      tags:
+      - user
+      summary: Получить список пользователей
+      parameters:
+      - name: offset
+        in: query
+        type: integer
+        description: Позиция с которой выбирать элементы (от начала)
+      - name: limit
+        in: query
+        type: integer
+        description: Количество элементов в выборке
+      responses:
+        200:
+          description: Список пользователей
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/User'
+
+  /user/{id}/ban:
+    get:
+      security:
+      - cookieAuth: []
+      tags:
+      - account
+      summary: Забанить пользователя
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: integer
+      responses:
+        200:
+          description: OK
+        401:
+          description: Пользователь не авторизован
+        403:
+          description: Нет прав
+        404:
+          description: Пользователь не найден
+        409:
+          description: Пользователь уже забанен
+
+  /user/{id}/role/{role}:
+    get:
+      security:
+      - cookieAuth: []
+      tags:
+      - account
+      summary: Изменить роль пользователя в системе
+      description: Требуются права модератора
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: integer
+      - name: role
+        in: path
+        required: true
+        type: string
+        description: user, expert, moderator, admin
+      responses:
+        200:
+          description: OK
+        401:
+          description: Пользователь не авторизован
+        403:
+          description: Нет прав
+        404:
+          description: Пользователь не найден
+        409:
+          description: Попытка дать такую же роль
+        422:
+          description: Неверная роль
+
+
+  /user/{id}:
+    get:
+      tags:
+      - user
+      summary: Получить информацию о пользователе
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: integer
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/User'
+        404:
+          description: Пользователь не найден
+    put:
+      tags:
+      - user
+      summary: Изменение информации о пользователе
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: integer
+      - name: body
+        required: true
+        in: body
+        schema:
+          type: object
+          properties:
+            name:
+              type: string
+            surname:
+              type: string
+            email:
+              type: string
+            position:
+              type: string
+            tags:
+              type: array
+              items:
+                type: string
+            interests:
+              type: array
+              items:
+                type: string
+      responses:
+        200:
+          description: OK
+        403:
+          description: Нет прав
+        404:
+          description: Пользователь не найден
+        422:
+          description: Отправлены неверные данные
+
+  /user/{id}/questions:
+    get:
+      tags:
+      - user
+      summary: Получить все вопросы созданные пользователем
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: integer
+      - name: closed
+        in: query
+        required: true
+        type: integer
+        description: Если 1, то возвращается список закрытых вопросов пользователя
+      - name: archived
+        in: query
+        required: true
+        type: integer
+        description: Если 1, то возвращается список архивированных вопросов пользователя
+      - name: offset
+        in: query
+        type: integer
+        description: Позиция с которой выбирать элементы (от начала)
+      - name: limit
+        in: query
+        type: integer
+        description: Количество элементов в выборке
+      responses:
+        200:
+          description: Закрытые или общедоступные вопросы созданные пользователем (от новых к старым)
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Question'
+        404:
+          description: Пользователь не найден
+
+  /user/{id}/articles:
+    get:
+      tags:
+      - user
+      summary: Получить все статьи созданные пользователем
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: integer
+      - name: archived
+        in: query
+        required: true
+        type: integer
+        description: Если 1, то возвращается список архивированных статей пользователя
+      - name: offset
+        in: query
+        type: integer
+        description: Позиция с которой выбирать элементы (от начала)
+      - name: limit
+        in: query
+        type: integer
+        description: Количество элементов в выборке
+      responses:
+        200:
+          description: Список всех статей пользователя
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Question'
+        404:
+          description: Пользователь не найден
+
+  /user/{id}/comments:
+    get:
+      tags:
+      - user
+      summary: Получить все комментарии/ответы пользователя
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: integer
+      - name: offset
+        in: query
+        type: integer
+        description: Позиция с которой выбирать элементы (от начала)
+      - name: limit
+        in: query
+        type: integer
+        description: Количество элементов в выборке
+      responses:
+        200:
+          description: Список всех комментариев пользователя
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Comment'
+        404:
+          description: Пользователь не найден
+
+  /question/all:
+    get:
+      tags:
+      - question
+      summary: Получить список вопросов (от новых к старым)
+      parameters:
+      - name: offset
+        in: query
+        type: integer
+        description: Позиция с которой выбирать вопросы (от начала)
+      - name: limit
+        in: query
+        type: integer
+        description: Количество вопросов в выборке
+      - name: closed
+        in: query
+        type: integer
+        description: Если не пустой и не 0, получим список закрытых вопросов
+      - name: archived
+        in: query
+        required: true
+        type: integer
+        description: Если 1, то возвращается список архивированных вопросов
+      - name: tags
+        in: query
+        type: string
+        description: Фильтрация по тэгам (через запятую)
+      responses:
+        200:
+          description: Список вопросов (от новых к старым)
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Question'
+        422:
+          description: Отправлены неверные данные
+
+  /question:
+    post:
+      security:
+      - cookieAuth: []
+      tags:
+      - question
+      summary: Создать новый вопрос
+      parameters:
+      - name: body
+        required: true
+        in: body
+        schema:
+          type: object
+          properties:
+            title:
+              type: string
+            body:
+              type: string
+            closed:
+              type: boolean
+            only_experts_answer:
+              type: boolean
+            only_chosen_tags:
+              type: boolean
+            tags:
+              type: array
+              items:
+                type: string
+          required:
+            - title
+            - body
+            - closed
+            - only_experts_answer
+            - only_chosen_tags
+            - tags
+      responses:
+        201:
+          description: Вопрос успешно создан
+        401:
+          description: Пользователь не авторизован
+        404:
+          description: Вопрос не найден
+        422:
+          description: Отправлены неверные данные
+
+  /question/{id}:
+    parameters:
+    - name: id
+      in: path
+      description: ID вопроса
+      required: true
+      type: integer
+    get:
+      security:
+      - cookieAuth: []
+      tags:
+      - question
+      summary: Получить информацию о вопросе
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: "#/definitions/Question"
+        403:
+          description: Если вопрос закрытый, а пользователь не эксперт
+        404:
+          description: Вопрос не найден
+    put:
+      security:
+      - cookieAuth: []
+      tags:
+      - question
+      summary: Обновить вопрос
+      parameters:
+      - name: body
+        required: true
+        in: body
+        schema:
+          type: object
+          properties:
+            title:
+              type: string
+            body:
+              type: string
+            closed:
+              type: boolean
+            only_experts_answer:
+              type: boolean
+            only_chosen_tags:
+              type: boolean
+            tags:
+              type: array
+              items:
+                type: string
+      responses:
+        403:
+          description: Нет прав
+        404:
+          description: Вопрос не найден
+    delete:
+      security:
+      - cookieAuth: []
+      tags:
+      - question
+      summary: Удалить вопрос
+      responses:
+        200:
+          description: Вопрос успешно удален
+        403:
+          description: Нет прав
+        404:
+          description: Вопрос не найден
+          
+  /question/{id}/archive:
+    get:
+      parameters:
+      - name: id
+        in: path
+        description: ID вопроса
+        required: true
+        type: integer
+      tags:
+      - question
+      summary: Архивировать вопрос
+      responses:
+        200:
+          description: OK
+        403:
+          description: Нет прав
+        404:
+          description: Вопрос не найден
+          
+  /question/{id}/unarchive:
+    get:
+      parameters:
+      - name: id
+        in: path
+        description: ID вопроса
+        required: true
+        type: integer
+      tags:
+      - question
+      summary: Убрать вопрос из архива
+      responses:
+        200:
+          description: OK
+        403:
+          description: Нет прав
+        404:
+          description: Вопрос не найден
+
+  /question/{id}/comments:
+    parameters:
+    - name: id
+      in: path
+      description: ID вопроса
+      required: true
+      type: integer
+    get:
+      tags:
+      - question
+      summary: Получить ответы на вопрос (от новых к старым)
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: "#/definitions/Comment"
+        403:
+          description: Нет прав
+        404:
+          description: Вопрос не найден
+
+  /question/{id}/comment:
+    post:
+      security:
+      - cookieAuth: []
+      tags:
+      - question
+      summary: Создать ответ на вопрос
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: integer
+      - name: body
+        in: body
+        schema:
+          type: object
+          properties:
+            text:
+              type: string
+          required:
+            - text
+      responses:
+        201:
+          description: Ответ успешно создан
+        403:
+          description: Нет прав
+        404:
+          description: Вопрос не найден
+
+  /question/{id}/increase_views:
+    get:
+      summary: Увеличить количество просмотров страницы с вопросом
+      tags:
+      - question
+      parameters:
+      - name: id
+        in: path
+        type: integer
+        description: ID вопроса
+        required: true
+      responses:
+        200:
+          description: ОК
+
+  /question/{id}/toggle_upvote:
+    get:
+      security:
+      - cookieAuth: []
+      summary: Проголосовать за вопрос / отменить голос
+      tags:
+      - question
+      parameters:
+      - name: id
+        in: path
+        type: integer
+        description: ID вопроса
+        required: true
+      responses:
+        200:
+          description: ОК
+        403:
+          description: Нет прав
+
+  /question/{id}/toggle_downvote:
+    get:
+      security:
+      - cookieAuth: []
+      summary: Проголосовать против вопроса / отменить голос
+      tags:
+      - question
+      parameters:
+      - name: id
+        in: path
+        type: integer
+        description: ID вопроса
+        required: true
+      responses:
+        200:
+          description: ОК
+        403:
+          description: Нет прав
+
+  /comment/{id}:
+    parameters:
+    - name: id
+      in: path
+      required: true
+      type: integer
+    get:
+      tags:
+      - comment
+      summary: Получить информацию о комментарии
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: "#/definitions/Comment"
+        403:
+          description: Нет прав
+        404:
+          description: Комментарий не найден
+    put:
+      security:
+      - cookieAuth: []
+      tags:
+      - comment
+      summary: Обновить комментарий
+      parameters:
+      - name: body
+        required: true
+        in: body
+        schema:
+          type: object
+          properties:
+            text:
+              type: string
+      responses:
+        200:
+          description: OK
+        403:
+          description: Нет прав
+        404:
+          description: Комментарий не найден
+    delete:
+      security:
+      - cookieAuth: []
+      tags:
+      - comment
+      summary: Удалить комментарий
+      responses:
+        200:
+          description: Комментарий успешно удален
+        403:
+          description: Нет прав
+        404:
+            description: Комментарий не найден
+
+  /comment/{id}/toggle_upvote:
+    get:
+      security:
+      - cookieAuth: []
+      summary: Проголосовать за комментарий / отменить голос
+      tags:
+      - comment
+      parameters:
+      - name: id
+        in: path
+        type: integer
+        required: true
+      responses:
+        200:
+          description: ОК
+        403:
+          description: Нет прав
+
+  /comment/{id}/toggle_downvote:
+    get:
+      security:
+      - cookieAuth: []
+      summary: Проголосовать против комментария / отменить голос
+      tags:
+      - comment
+      parameters:
+      - name: id
+        in: path
+        type: integer
+        required: true
+      responses:
+        200:
+          description: ОК
+        403:
+          description: Нет прав
+
+  /tag/all:
+    get:
+      security:
+      - cookieAuth: []
+      summary: Получить все тэги
+      tags:
+      - tags
+      responses:
+        200:
+          description: Список тэгов
+          schema:
+            type: array
+            items:
+              type: string
+
+  /tag:
+    get:
+      security:
+      - cookieAuth: []
+      summary: Создать новый тэг
+      tags:
+      - tags
+      parameters:
+      - name: name
+        in: query
+        type: string
+        required: true
+      responses:
+        201:
+          description: Тэг успешно создан
+        403:
+          description: Нет прав
+        409:
+          description: Такой тэг уже есть
+          
+  /tag/{tag}:
+    put:
+      security:
+      - cookieAuth: []
+      summary: Изменить название тэга
+      tags:
+      - tags
+      parameters:
+      - name: tag
+        in: path
+        type: string
+        required: true
+      - name: name
+        in: query
+        type: string
+        required: true
+        description: Новое название тэга
+      responses:
+        200:
+          description: Тэг успешно обновлен
+        404:
+          description: Тэг не найден
+        409:
+          description: Такой тэг уже есть
+    delete:
+      security:
+      - cookieAuth: []
+      summary: Удалить тэг
+      description: При удалении тэга, он удаляется у всех пользователей и постов
+      tags:
+      - tags
+      parameters:
+      - name: tag
+        in: path
+        type: string
+        required: true
+      responses:
+        200:
+          description: Тэг успешно удален
+        404:
+          description: Тэг не найден
+
+
+securityDefinitions:
+  cookieAuth:
+    type: apiKey
+    in: header
+    name: Cookie
+
+
+definitions:
+  User:
+    type: object
+    properties:
+      id:
+        type: integer
+      email:
+        type: string
+        format: email
+      name:
+        type: string
+        description: Имя
+      surname:
+        type: string
+        description: Фамилия
+      role:
+        type: string
+        description: Роль пользователя в системе (user, expert, moderator, admin, superadmin)
+      position:
+        type: string
+        description: Должность
+      question_count:
+        type: integer
+        description: Количество созданных вопросов
+      article_count:
+        type: integer
+        description: Количество созданных статей
+      comment_count:
+        type: integer
+        description: Количество оставленных комментариев/ответов
+      rating:
+        type: integer
+        description: Рейтинг
+      registration_date:
+        type: integer
+        description: Дата и время регистрации
+      tags:
+        type: array
+        description: Экспертные области пользователя
+        items:
+          type: string
+      interests:
+        type: array
+        description: Научные интересы пользователя
+        items:
+          type: string
+      status:
+        type: string
+        description: Статус пользователя (active, deleted, banned)
+  Question:
+    type: object
+    properties:
+      id:
+        type: integer
+      u_id:
+        type: integer
+        description: ID пользователя
+      email:
+        type: string
+        format: email
+      title:
+        type: string
+        description: Заголовок вопроса
+      body:
+        type: string
+        description: Тело вопроса
+      creation_date:
+        type: number
+        format: double
+        description: Время создания вопроса в формате timestamp
+      view_count:
+        type: integer
+        description: Количество просмотров страницы этого вопроса
+      comment_count:
+        type: integer
+        description: Количество ответов на вопрос
+      score:
+        type: integer
+        description: Оценка вопроса
+      tags:
+        type: array
+        description: Области вопроса
+        items:
+          type: string
+      status:
+        type: string
+        description: Статус вопроса (deleted, archived)
+      closed:
+        type: boolean
+        description: Закрытый или общедоступный вопрос
+      only_experts_answer:
+        type: boolean
+        description: Если true, отвечать на вопрос могут только эксперты
+      only_chosen_tags:
+        type: boolean
+        description: Если true, отвечать на вопрос могут только эксперты выбранных областей
+  Comment:
+    type: object
+    properties:
+      id:
+        type: integer
+      p_id:
+        type: integer
+        description: ID поста под которым оставлен комментарий
+      u_id:
+        type: integer
+        description: ID автора вопроса
+      post_type:
+        type: string
+        description: Тип поста для которого был создан комментарий (question, article)
+      email:
+        type: string
+        format: email
+      text:
+        type: string
+        description: Текст комментария/ответа
+      creation_date:
+        type: number
+        format: double
+        description: Время создания комментария в формате timestamp
+      score:
+        type: integer
+        description: Оценка комментария

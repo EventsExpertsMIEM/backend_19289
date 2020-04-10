@@ -76,10 +76,9 @@
         </div>
         <p>Основные функции сервиса:</p>
         <ul class="list-group-flush">
-          <li>Просматривать, создавать вопросы и отвечать на них;</li>
-          <li>Просматривать, создавать статьи;</li>
-          <li>Просматривать различные документы связанные с конгрессной деятельностью;</li>
-          <li>Зарегистрироваться, подать заявку на получения статуса эксперта и развивать конгрессное сообщество;</li>
+          <li>Регистрация, изменение личной информации, имеются роли пользователей;</li>
+          <li>Просмотр, создание вопросов и статей, оставление под ними комментариев;</li>
+          <li>Голосование за вопросы, статьи и комментарии;</li>
         </ul>
       </div>
     </section>
@@ -104,9 +103,10 @@
           <ul class="list-group-flush">
             <li>В <code>exproj</code> лежит код самого бекенда</li>
             <ul>
-              <li><code>/</code> - базовая логика</li>
-              <li><code>db</code> - структура и взаимодействие с бд</li>
-              <li><code>restful_api</code> - ручки</li>
+              <li><code>__init__.py</code> - инициализация, базовая настройка;</li>
+              <li><code>db</code> - структура и взаимодействие с БД;</li>
+              <li><code>logic</code> - логика;</li>
+              <li><code>rest_api</code> - ручки;</li>
             </ul>
           </ul>
 
@@ -185,7 +185,7 @@
     <section class="resume-section p-3 p-lg-5 d-flex align-items-center" id="usage">
       <div class="w-100">
         <h2 class="mb-5">Running</h2>
-        <p>Сервис берёт свои настройки (БД, параметры почты и др.) через переменные окружения, поэтому рекомендуется использовать специальный скрипт (например <a class="js-scroll-trigger" href="#setup">setup.sh</a>) и инициилизировать переменные окручения через <kbd>. setup.sh</kbd> / <kbd>source setup.sh</kbd></p>
+        <p>Сервис берёт свои настройки (БД, параметры почты и др.) через переменные окружения. Не забудьте создать и отредактировать <kbd>.env</kbd> файл в корне репозитория</p>
         <p></p>
         <p>При первом запуске необходимо указать <kbd>--create-tables password</kbd>, где первый параметр (пере)создает в БД нужные таблицы, а второй - пароль от начальной учетной записи <code>root_mail</code></p>
         <p></p>
@@ -197,9 +197,9 @@
 
     <section class="resume-section p-3 p-lg-5 d-flex align-items-center" id="setup">
       <div class="w-100">
-        <h2 class="mb-5">SETUP.SH</h2>
+        <h2 class="mb-5">.env</h2>
 
-        <p>Данный скрипт заполняет конфиг из переменных окружения, и его рекомендуется положить заполненный вне папки репозитория.</p>
+        <p>Данный файл содержит конфиг приложения. Переменные окружения автоматически добавляются при запуске приложения.</p>
 
         <div><kbd>#!/bin/bash</kbd></div>
         <p></p>
@@ -213,15 +213,16 @@
         <div><kbd>export PGDATABASE=""</kbd></div>
         <code># пароль пользователя postgresql</code>
         <div><kbd>export PGPASSWORD=""</kbd></div>
-        <p></p>
+        <br>
         <code># порт приложения</code>
-        <div><kbd>export PORT=""</kbd></div>
-        <p></p>
+        <div><kbd>export PORT="8080"</kbd></div>
+        <br>
         <code># подтверждение регистрации по электронной почте</code>
+        <br>
         <code># 'active' (account_status) для отключения подтверждения</code>
+        <br>
         <code># 'unconfirmed' (account_status) для включения</code>
         <div><kbd>export DEFAULT_USER_STATUS=""</kbd></div>
-        <p></p>
         <code># smtp сервер электронной почты</code>
         <div><kbd>export SMTP_HOST=""</kbd></div>
         <code># адрес электронной почты для отправки</code>
@@ -230,8 +231,18 @@
         <div><kbd>export MAIL_PASSWORD=""</kbd></div>
         <code># временно - линк на сервис (http(s)://адрес:порт)</code>
         <div><kbd>export SITE_ADDR=""</kbd></div>
-        
+        <br>
+        <code># Почта суперпользователя</code>
+        <div><kbd>export SUPER_ADMIN_MAIL="root_mail"</kbd></div>
+        <code># Пароль суперпользователя</code>
+        <div><kbd>export SUPER_ADMIN_PASSWORD="123"</kbd></div>
+        <br>
+        <code># Корневая папка для хранения загруженный файлов</code>
+        <div><kbd>export FILE_UPLOADS_PARENT_DIRECTORY="storage"</kbd></div>
+        <code># Максимальный размер файла (пока только в Мб)</code>
+        <div><kbd>export MAX_FILE_SIZE=100</kbd></div>
       </div>
+
     </section>
 
     <hr class="m-0">
