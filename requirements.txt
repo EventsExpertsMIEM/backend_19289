@@ -8,7 +8,7 @@ chardet==3.0.4
 Click==7.0
 colorama==0.4.3
 contextlib2==0.5.5
-cryptography==2.8
+cryptography==3.2
 Flask==1.1.1
 Flask-Cors==3.0.8
 Flask-Login==0.4.1
