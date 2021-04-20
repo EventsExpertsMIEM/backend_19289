@@ -28,7 +28,7 @@ pg8000==1.13.2
 pip-autoremove==0.9.1
 pluggy==0.13.1
 psycopg2-binary==2.8.4
-py==1.8.1
+py==1.10.0
 pycparser==2.19
 PyJWT==1.7.1
 pyparsing==2.4.6
